@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D GPS Path Planner - Aegis Autonomy</title>
+    
+    <!-- CesiumJS from CDN -->
+    <script src="https://cesium.com/downloads/cesiumjs/releases/1.116/Build/Cesium/Cesium.js"></script>
+    <link href="https://cesium.com/downloads/cesiumjs/releases/1.116/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+    
+    <!-- Custom Style -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="loader">로딩 중... (3D 엔진 초기화)</div>
+
+    <!-- Cesium 3D Map Container -->
+    <div id="cesiumContainer"></div>
+
+    <!-- UI Overlay Sidebar -->
+    <div class="sidebar">
+        <!-- Branding Header -->
+        <div class="brand-container">
+            <!-- SVG Placeholder for Logo (to be replaced with <img> later) -->
+            <svg class="brand-logo-placeholder" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2L3 7v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V8.14l7-3.89v8.74z"/>
+            </svg>
+            <span class="brand-name">AEGIS AUTONOMY</span>
+        </div>
+
+        <!-- Controls -->
+        <div class="control-group">
+            <label>경로 보간 간격 (m)</label>
+            <div class="flex-row">
+                <input type="range" id="intervalSlider" min="0.5" max="10" step="0.5" value="1.0">
+                <span id="intervalValue" style="font-weight: 600; min-width: 40px;">1.0m</span>
+            </div>
+            <div class="hint-text">지도 클릭 지점 사이를 위 설정 간격으로 자동 채웁니다.</div>
+        </div>
+
+        <div class="control-group">
+            <label>웨이포인트 (클릭 지점)</label>
+            <div class="waypoints-list" id="waypointsList">
+                <div style="font-size: 0.8rem; color: var(--text-muted); text-align: center; padding: 10px;">
+                    지도 위를 클릭하여 경로를 생성하세요.
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div style="display: flex; gap: 10px; margin-top: 10px;">
+            <button class="btn btn-primary" id="btnExport" style="flex: 1;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                JSON 내보내기
+            </button>
+            <button class="btn btn-danger" id="btnClear">초기화</button>
+        </div>
+    </div>
+
+    <!-- Application Logic -->
+    <script src="app.js"></script>
+</body>
+</html>
