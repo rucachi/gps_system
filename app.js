@@ -100,6 +100,23 @@ function addKeypoint(cartesian) {
 
     updateInterpolation();
     renderSidebar();
+    updatePinColors();
+}
+
+// Update Pin Colors (Start = Green, End = Red, Middle = Blue)
+function updatePinColors() {
+    keypoints.forEach((kp, index) => {
+        const entity = viewer.entities.getById('pin_' + kp.id);
+        if (entity) {
+            if (index === 0) {
+                entity.point.color = Cesium.Color.LIMEGREEN; // Start (1st click)
+            } else if (index === keypoints.length - 1) {
+                entity.point.color = Cesium.Color.CRIMSON; // End (Last click)
+            } else {
+                entity.point.color = Cesium.Color.DEEPSKYBLUE; // Middle path points
+            }
+        }
+    });
 }
 
 // Interpolate between keypoints
