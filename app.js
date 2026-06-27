@@ -29,8 +29,7 @@ async function initCesium() {
             terrain: Cesium.Terrain.fromWorldTerrain() // Enable 3D Terrain
         });
 
-        // Remove default Bing Maps and add V-World Satellite Layer
-        viewer.imageryLayers.removeAll();
+        // Add V-World Satellite Layer on top of the default Cesium World Imagery (Fallback)
         const vworldImagery = new Cesium.UrlTemplateImageryProvider({
             url: 'https://api.vworld.kr/req/wmts/1.0.0/' + VWORLD_KEY + '/Satellite/{z}/{y}/{x}.jpeg',
             minimumLevel: 0,
@@ -40,7 +39,12 @@ async function initCesium() {
 
         // Initial Camera Position (Seoul/Factory area approx)
         viewer.camera.flyTo({
-            destination: Cesium.Cartesian3.fromDegrees(126.9780, 37.5665, 5000)
+            destination: Cesium.Cartesian3.fromDegrees(126.9780, 37.5665, 5000),
+            orientation: {
+                heading: Cesium.Math.toRadians(0.0),
+                pitch: Cesium.Math.toRadians(-90.0), // Point the camera straight down
+                roll: 0.0
+            }
         });
 
         // Setup Click Event
